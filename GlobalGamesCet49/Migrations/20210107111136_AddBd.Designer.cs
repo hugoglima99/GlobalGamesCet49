@@ -3,14 +3,16 @@ using GlobalGamesCet49.Dados;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GlobalGamesCet49.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210107111136_AddBd")]
+    partial class AddBd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,26 +34,7 @@ namespace GlobalGamesCet49.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contactos");
-                });
-
-            modelBuilder.Entity("GlobalGamesCet49.Dados.Entidades.Inscricao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email");
-
-                    b.Property<int>("Morada");
-
-                    b.Property<string>("Nome");
-
-                    b.Property<int>("NumeroTelefone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Inscricao");
+                    b.ToTable("Contacto");
                 });
 #pragma warning restore 612, 618
         }

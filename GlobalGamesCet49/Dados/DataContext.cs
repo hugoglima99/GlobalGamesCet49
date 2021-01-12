@@ -10,20 +10,23 @@ namespace GlobalGamesCet49.Dados
     
 
     public class DataContext : DbContext
-    {
+    { 
         
         
+        public DbSet<Inscricoes> Inscricoes { get; set; }
+
+
         public DbSet<Contacto> Contactos { get; set; }
-      
-        
-        
-        public DbSet<Inscricao> Inscricao { get; set; }
 
-       
 
-        public DataContext(DbContextOptions<DataContext>options) : base(options)
+         public DataContext(DbContextOptions<DataContext>options) : base(options)
         {
 
         }
+
+
+
+
+       
     }
 }

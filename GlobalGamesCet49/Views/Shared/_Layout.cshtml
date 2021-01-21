@@ -6,12 +6,27 @@
     <meta name="Description" content="desenvolvimento de jogos e realidade virtual">
     <meta name="Keywords" content="realidade virtual, criamos jogos, desenvolvemos jogos">
     <title>GlobalGames | @ViewData["Title"]</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/css/site.css" />
+        <!-- Latest compiled and minified CSS FEITO POR JD-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript FEITO POR JD-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </environment>
 </head>
 <body>
@@ -19,16 +34,25 @@
     <header>
         <div class="container">
             <div id="logo">
-                <h1><span class="destaque">Global</span> Games Enterprise</h1>
+                <h1><span class="destaque">Global</span> Games </h1>
             </div>
             <nav>
                 <ul>
                     <li id="home"><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li id="sobre"><a asp-controller="Home" asp-action="Sobre">Sobre</a></li>
                     <li id="servicos"><a asp-controller="Home" asp-action="Servicos">Serviços</a></li>
-                    @*<li id="contacto"><a asp-controller="Contactos" asp-action="Index">Contacto</a></li>*@
                     <li id="inscricoes"><a asp-controller="Home" asp-action="Inscricoes">Inscrição</a></li>
+
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                      <li><a asp-controller="UserLogins" asp-action="Index" class="dropdown-item">User</a></li>
+                      <li><a asp-controller="Contactos" asp-action="Index" class="dropdown-item">Contactos</a></li>
+                      <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser" class="dropdown-item">@this.User.Identity.Name</a></li>
+                      <li><a asp-area="" asp-controller="Account" asp-action="Logout" class="dropdown-item">Logout</a></li> }
+                     else
+                     {<li><a asp-area="" asp-controller="Account" asp-action="Login"> Login </a></li>}
                 </ul>
+     
             </nav>
         </div>
     </header>
@@ -38,38 +62,14 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus facilisis lectus at sapien dapibus facilisis. Ut maximus nunc urna, non congue diam mattis ut. Fusce eros leo, pulvinar ut ultrices non, aliquam nec quam. Integer gravida ut mauris ac ultrices. Phasellus iaculis elementum condimentum.</p>
         </div>
     </section>
-   
-    <partial name="_Newsletter"/>
+
+    <partial name="_Newsletter" />
 
     @RenderBody()
 
     <footer>
         <p>Global Games, Copyright &copy; @DateTime.Now.Year</p>
     </footer>
-
-    <!--
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">GlobalGamesCet49</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-        -->
-
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -93,5 +93,7 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+
+
 </body>
 </html>

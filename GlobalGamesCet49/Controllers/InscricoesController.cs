@@ -1,28 +1,31 @@
-﻿namespace GlobalGamesCet49.Controllers
-{
-    using GlobalGamesCet49.Dados;
-    using GlobalGamesCet49.Dados.Entidades;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using System.Linq;
-    using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using GlobalGamesCet49.Dados;
+using GlobalGamesCet49.Dados.Entidades;
 
-    public class ContactosController : Controller
+namespace GlobalGamesCet49.Controllers
+{
+    public class InscricoesController : Controller
     {
         private readonly DataContext _context;
 
-        public ContactosController(DataContext context)
+        public InscricoesController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Contactos
+        // GET: Inscricoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Contactos.ToListAsync());
+            return View(await _context.Inscricoes.ToListAsync());
         }
 
-        // GET: Contactos/Details/5
+        // GET: Inscricoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -30,39 +33,39 @@
                 return NotFound();
             }
 
-            var contacto = await _context.Contactos
+            var inscricoes = await _context.Inscricoes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (contacto == null)
+            if (inscricoes == null)
             {
                 return NotFound();
             }
 
-            return View(contacto);
+            return View(inscricoes);
         }
 
-        // GET: Contactos/Create
+        // GET: Inscricoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Contactos/Create
+        // POST: Inscricoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Email,NumeroTelefone")] Contacto contacto)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Apelido,Morada,CCidadao,Anos,ImageFile")] Inscricoes inscricoes)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contacto);
+                _context.Add(inscricoes);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(contacto);
+            return View(inscricoes);
         }
 
-        // GET: Contactos/Edit/5
+        // GET: Inscricoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -70,22 +73,22 @@
                 return NotFound();
             }
 
-            var contacto = await _context.Contactos.FindAsync(id);
-            if (contacto == null)
+            var inscricoes = await _context.Inscricoes.FindAsync(id);
+            if (inscricoes == null)
             {
                 return NotFound();
             }
-            return View(contacto);
+            return View(inscricoes);
         }
 
-        // POST: Contactos/Edit/5
+        // POST: Inscricoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,NumeroTelefone")] Contacto contacto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Apelido,Morada,CCidadao,Anos,ImageFile")] Inscricoes inscricoes)
         {
-            if (id != contacto.Id)
+            if (id != inscricoes.Id)
             {
                 return NotFound();
             }
@@ -94,12 +97,12 @@
             {
                 try
                 {
-                    _context.Update(contacto);
+                    _context.Update(inscricoes);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContactoExists(contacto.Id))
+                    if (!InscricoesExists(inscricoes.Id))
                     {
                         return NotFound();
                     }
@@ -110,10 +113,10 @@
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(contacto);
+            return View(inscricoes);
         }
 
-        // GET: Contactos/Delete/5
+        // GET: Inscricoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -121,30 +124,30 @@
                 return NotFound();
             }
 
-            var contacto = await _context.Contactos
+            var inscricoes = await _context.Inscricoes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (contacto == null)
+            if (inscricoes == null)
             {
                 return NotFound();
             }
 
-            return View(contacto);
+            return View(inscricoes);
         }
 
-        // POST: Contactos/Delete/5
+        // POST: Inscricoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contacto = await _context.Contactos.FindAsync(id);
-            _context.Contactos.Remove(contacto);
+            var inscricoes = await _context.Inscricoes.FindAsync(id);
+            _context.Inscricoes.Remove(inscricoes);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContactoExists(int id)
+        private bool InscricoesExists(int id)
         {
-            return _context.Contactos.Any(e => e.Id == id);
+            return _context.Inscricoes.Any(e => e.Id == id);
         }
     }
 }

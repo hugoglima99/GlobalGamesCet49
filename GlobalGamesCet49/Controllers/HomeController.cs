@@ -1,9 +1,9 @@
-﻿using GlobalGamesCet49.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
-namespace GlobalGamesCet49.Controllers
+﻿namespace GlobalGamesCet49.Controllers
 {
+    using GlobalGamesCet49.Models;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Diagnostics;
+
     public class HomeController : Controller
     {
         public IActionResult Index()

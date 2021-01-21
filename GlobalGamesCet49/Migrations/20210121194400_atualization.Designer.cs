@@ -4,14 +4,16 @@ using GlobalGamesCet49.Dados;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GlobalGamesCet49.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210121194400_atualization")]
+    partial class atualization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,6 +68,8 @@ namespace GlobalGamesCet49.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<string>("Apelido");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -73,10 +77,6 @@ namespace GlobalGamesCet49.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -93,6 +93,8 @@ namespace GlobalGamesCet49.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("PrimeiroNome");
 
                     b.Property<string>("SecurityStamp");
 
@@ -120,11 +122,10 @@ namespace GlobalGamesCet49.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ImageUrl");
+                    b.Property<string>("ImageFile");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30);
+                    b.Property<string>("Nome")
+                        .IsRequired();
 
                     b.Property<string>("UserId");
 

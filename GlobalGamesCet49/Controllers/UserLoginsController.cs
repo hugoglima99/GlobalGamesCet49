@@ -1,28 +1,33 @@
 ﻿namespace GlobalGamesCet49.Controllers
 {
+    using GlobalGamesCet49.Helpers;
     using GlobalGamesCet49.Dados;
     using GlobalGamesCet49.Dados.Entidades;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class ContactosController : Controller
+    [Authorize]
+    public class UserLoginsController : Controller
     {
         private readonly DataContext _context;
+        private readonly IUserHelper userHelper;
 
-        public ContactosController(DataContext context)
+        public UserLoginsController(DataContext context, IUserHelper userHelper)
         {
             _context = context;
+            this.userHelper = userHelper;
         }
 
-        // GET: Contactos
+        // GET: UserLogins
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Contactos.ToListAsync());
+            return View(await _context.UserLogin.ToListAsync());
         }
 
-        // GET: Contactos/Details/5
+        // GET: UserLogins/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -30,39 +35,43 @@
                 return NotFound();
             }
 
-            var contacto = await _context.Contactos
+            var userLogin = await _context.UserLogin
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (contacto == null)
+            if (userLogin == null)
             {
                 return NotFound();
             }
 
-            return View(contacto);
+            return View(userLogin);
         }
 
-        // GET: Contactos/Create
+        // GET: UserLogins/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Contactos/Create
+        // POST: UserLogins/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Email,NumeroTelefone")] Contacto contacto)
+        public async Task<IActionResult> Create([Bind("Id,Name,ImageUrl")] UserLogin userLogin)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contacto);
+                userLogin.User = await this.userHelper.GetUserByEmailAsync("hugoglima1999@gmail.com");
+
+
+
+                _context.Add(userLogin);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(contacto);
+            return View(userLogin);
         }
 
-        // GET: Contactos/Edit/5
+        // GET: UserLogins/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -70,22 +79,22 @@
                 return NotFound();
             }
 
-            var contacto = await _context.Contactos.FindAsync(id);
-            if (contacto == null)
+            var userLogin = await _context.UserLogin.FindAsync(id);
+            if (userLogin == null)
             {
                 return NotFound();
             }
-            return View(contacto);
+            return View(userLogin);
         }
 
-        // POST: Contactos/Edit/5
+        // POST: UserLogins/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,NumeroTelefone")] Contacto contacto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ImageUrl")] UserLogin userLogin)
         {
-            if (id != contacto.Id)
+            if (id != userLogin.Id)
             {
                 return NotFound();
             }
@@ -94,12 +103,13 @@
             {
                 try
                 {
-                    _context.Update(contacto);
+                    userLogin.User = await this.userHelper.GetUserByEmailAsync("hugoglima1999@gmail.com");
+                    _context.Update(userLogin);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContactoExists(contacto.Id))
+                    if (!UserLoginExists(userLogin.Id))
                     {
                         return NotFound();
                     }
@@ -110,10 +120,10 @@
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(contacto);
+            return View(userLogin);
         }
 
-        // GET: Contactos/Delete/5
+        // GET: UserLogins/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -121,30 +131,30 @@
                 return NotFound();
             }
 
-            var contacto = await _context.Contactos
+            var userLogin = await _context.UserLogin
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (contacto == null)
+            if (userLogin == null)
             {
                 return NotFound();
             }
 
-            return View(contacto);
+            return View(userLogin);
         }
 
-        // POST: Contactos/Delete/5
+        // POST: UserLogins/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contacto = await _context.Contactos.FindAsync(id);
-            _context.Contactos.Remove(contacto);
+            var userLogin = await _context.UserLogin.FindAsync(id);
+            _context.UserLogin.Remove(userLogin);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContactoExists(int id)
+        private bool UserLoginExists(int id)
         {
-            return _context.Contactos.Any(e => e.Id == id);
+            return _context.UserLogin.Any(e => e.Id == id);
         }
     }
 }

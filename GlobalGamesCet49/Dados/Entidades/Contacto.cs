@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace GlobalGamesCet49.Dados.Entidades
+﻿namespace GlobalGamesCet49.Dados.Entidades
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class Contacto
     {
         public int Id { get; set; }

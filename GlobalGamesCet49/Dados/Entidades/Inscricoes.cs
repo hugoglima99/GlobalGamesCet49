@@ -25,6 +25,29 @@ namespace GlobalGamesCet49.Dados.Entidades
 
             [Display(Name = "Data de Nascimento")]
             public DateTime Anos { get; set; }
-        
+
+           [Display(Name = "Image")]
+            public string ImageFile { get; set; }
+
+
+
+
+        public string Image
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.ImageFile))
+                {
+                    return null;
+                }
+
+                return $"https://localhost:44323/%7Bthis.ImageFile.Substring(1)%7D";
+            }
+        }
+
+
+
     }
 }
+
+
